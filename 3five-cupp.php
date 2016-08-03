@@ -50,8 +50,10 @@ Version: 0.4
  *
  */
 
-// Enqueue scripts and styles
-add_action( 'admin_enqueue_scripts', 'cupp_enqueue_scripts_styles' );
+
+/**
+ * Enqueue scripts and styles
+ */
 function cupp_enqueue_scripts_styles() {
 	// Register
 	wp_register_style( 'cupp_admin_css', plugins_url( 'custom-user-profile-photo/css/styles.css' ), false, '1.0.0', 'all' );
@@ -62,10 +64,16 @@ function cupp_enqueue_scripts_styles() {
 	wp_enqueue_script( 'cupp_admin_js' );
 }
 
-// Show the new image field in the user profile page.
-add_action( 'show_user_profile', 'cupp_profile_img_fields' );
-add_action( 'edit_user_profile', 'cupp_profile_img_fields' );
+add_action( 'admin_enqueue_scripts', 'cupp_enqueue_scripts_styles' );
 
+
+/**
+ * Show the new image field in the user profile page.
+ *
+ * @param $user
+ *
+ * @return bool
+ */
 function cupp_profile_img_fields( $user ) {
 	if ( ! current_user_can( 'upload_files' ) ) {
 		return false;
@@ -155,12 +163,20 @@ function cupp_profile_img_fields( $user ) {
 
     <?php wp_enqueue_media(); // Enqueue the WordPress Media Uploader ?>
 
-<?php }
+<?php
+}
 
-// Save the new user CUPP url.
-add_action( 'personal_options_update', 'cupp_save_img_meta' );
-add_action( 'edit_user_profile_update', 'cupp_save_img_meta' );
+add_action( 'show_user_profile', 'cupp_profile_img_fields' );
+add_action( 'edit_user_profile', 'cupp_profile_img_fields' );
 
+
+/**
+ * Save the new user CUPP url.
+ *
+ * @param $user_id
+ *
+ * @return bool
+ */
 function cupp_save_img_meta( $user_id ) {
 
 	if ( ! current_user_can( 'upload_files', $user_id ) ) {
@@ -174,6 +190,9 @@ function cupp_save_img_meta( $user_id ) {
 	update_user_meta( $user_id, 'cupp_upload_edit_meta', $_POST['cupp_upload_edit_meta'] );
 	// @codingStandardsIgnoreStop
 }
+
+add_action( 'personal_options_update', 'cupp_save_img_meta' );
+add_action( 'edit_user_profile_update', 'cupp_save_img_meta' );
 
 /**
  * Retrieve the appropriate image size
@@ -230,13 +249,20 @@ function get_cupp_meta( $user_id, $size ) {
     return $image_url;
 }
 
+
+
 /**
  * WordPress Avatar Filter
  *
  * Replaces the WordPress avatar with your custom photo using the get_avatar hook.
+ *
+ * @param $avatar
+ * @param $id_or_email
+ * @param $size
+ * @param $alt
+ *
+ * @return string
  */
-add_filter( 'get_avatar', 'cupp_avatar' , 1 , 5 );
-
 function cupp_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
     $user = false;
     $id = false;
@@ -270,3 +296,5 @@ function cupp_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 
     return $avatar;
 }
+
+add_filter( 'get_avatar', 'cupp_avatar' , 1 , 5 );
