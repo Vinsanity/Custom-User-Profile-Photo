@@ -14,7 +14,7 @@ Version: 0.4
  * This program has been developed for use with the WordPress Software.
  *
  * It is distributed as free software with the intent that it will be
- * usefull and does not ship with any WARRANTY.
+ * useful and does not ship with any WARRANTY.
  *
  * USAGE
  * // Default:
@@ -36,8 +36,9 @@ Version: 0.4
  *
  * Inquiries, suggestions and feedback can be sent to support@3five.com
  *
- * This is plugin is intented for Author, Editor and Admin role post/page authors. Thank you for downloading our
+ * This is plugin is intended for Author, Editor and Admin role post/page authors. Thank you for downloading our
  * plugin.
+ *
  * We hope this WordPress plugin meets your needs.
  *
  * Happy coding!
@@ -47,7 +48,6 @@ Version: 0.4
  *  • Steven Slack - http://s2web.staging.wpengine.com/226/
  *  • Pippin Williamson - https://gist.github.com/pippinsplugins/29bebb740e09e395dc06
  *  • Mike Jolley - https://gist.github.com/mikejolley/3a3b366cb62661727263#file-gistfile1-php
- *
  */
 
 
@@ -98,21 +98,27 @@ function cupp_profile_img_fields( $user ) {
 					<!-- Outputs the image after save -->
 					<div id="current_img">
 						<?php if ( $upload_url ): ?>
-							<img src="<?php echo esc_url( $upload_url ); ?>" class="cupp-current-img">
+							<img class="cupp-current-img" src="<?php echo esc_url( $upload_url ); ?>"/>
+
 							<div class="edit_options uploaded">
-								<a class="remove_img"><span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span></a>
-								<a href="<?php echo esc_url( $upload_edit_url ); ?>" class="edit_img"
-								   target="_blank"><span><?php _e( 'Edit', 'custom-user-profile-photo' ); ?></span></a>
+								<a class="remove_img">
+									<span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span>
+								</a>
+
+								<a class="edit_img" href="<?php echo esc_url( $upload_edit_url ); ?>" target="_blank">
+									<span><?php _e( 'Edit', 'custom-user-profile-photo' ); ?></span>
+								</a>
 							</div>
 						<?php elseif ( $url ) : ?>
-							<img src="<?php echo esc_url( $url ); ?>" class="cupp-current-img">
+							<img class="cupp-current-img" src="<?php echo esc_url( $url ); ?>"/>
 							<div class="edit_options single">
-								<a class="remove_img"><span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span></a>
+								<a class="remove_img">
+									<span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span>
+								</a>
 							</div>
 						<?php else : ?>
-							<img
-								src="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>"
-								class="cupp-current-img placeholder">
+							<img class="cupp-current-img placeholder"
+							     src="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>"/>
 						<?php endif; ?>
 					</div>
 
@@ -120,38 +126,43 @@ function cupp_profile_img_fields( $user ) {
 					<div id="cupp_options">
 						<input type="radio" id="upload_option" name="img_option" value="upload" class="tog" checked>
 						<label for="upload_option"><?php _e( 'Upload New Image', 'custom-user-profile-photo' ); ?></label><br>
+
 						<input type="radio" id="external_option" name="img_option" value="external" class="tog">
 						<label for="external_option"><?php _e( 'Use External URL', 'custom-user-profile-photo' ); ?></label><br>
 					</div>
 
 					<!-- Hold the value here if this is a WPMU image -->
 					<div id="cupp_upload">
-						<input type="hidden" name="cupp_placeholder_meta" id="cupp_placeholder_meta"
-						       value="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>"
-						       class="hidden" />
-						<input type="hidden" name="cupp_upload_meta" id="cupp_upload_meta"
-						       value="<?php echo esc_url_raw( $upload_url ); ?>" class="hidden" />
-						<input type="hidden" name="cupp_upload_edit_meta" id="cupp_upload_edit_meta"
-						       value="<?php echo esc_url_raw( $upload_edit_url ); ?>" class="hidden" />
-						<input type='button' class="cupp_wpmu_button button-primary"
-						       value="<?php _e( esc_attr( $button_text ), 'custom-user-profile-photo' ); ?>"
-						       id="uploadimage" />
+						<input class="hidden" type="hidden" name="cupp_placeholder_meta" id="cupp_placeholder_meta"
+						       value="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>" />
+						<input class="hidden" type="hidden" name="cupp_upload_meta" id="cupp_upload_meta"
+						       value="<?php echo esc_url_raw( $upload_url ); ?>" />
+						<input class="hidden" type="hidden" name="cupp_upload_edit_meta" id="cupp_upload_edit_meta"
+						       value="<?php echo esc_url_raw( $upload_edit_url ); ?>" />
+						<input id="uploadimage" type='button' class="cupp_wpmu_button button-primary"
+						       value="<?php _e( esc_attr( $button_text ), 'custom-user-profile-photo' ); ?>" />
 						<br />
 					</div>
+
 					<!-- Outputs the text field and displays the URL of the image retrieved by the media uploader -->
 					<div id="cupp_external">
-						<input type="text" name="cupp_meta" id="cupp_meta"
-						       value="<?php echo esc_url_raw( $url ); ?>" class="regular-text" />
+						<input class="regular-text" type="text" name="cupp_meta" id="cupp_meta" value="<?php echo esc_url_raw( $url ); ?>"  />
 					</div>
+
 					<!-- Outputs the save button -->
-					<span
-						class="description"><?php _e( 'Upload a custom photo for your user profile or use a URL to a pre-existing photo.', 'custom-user-profile-photo' ); ?></span>
+					<span class="description">
+						<?php
+						_e(
+							'Upload a custom photo for your user profile or use a URL to a pre-existing photo.',
+							'custom-user-profile-photo'
+						);
+						?>
+					</span>
 					<p class="description">
 						<?php _e( 'Update Profile to save your changes.', 'custom-user-profile-photo' ); ?>
 					</p>
 				</td>
 			</tr>
-
 		</table><!-- end form-table -->
 	</div> <!-- end #cupp_container -->
 
