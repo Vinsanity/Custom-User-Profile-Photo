@@ -179,7 +179,7 @@ function cupp_save_img_meta( $user_id ) {
 		'cupp_meta'             => filter_input( INPUT_POST, 'cupp_meta', FILTER_SANITIZE_STRING ),
 
 		// File path, e.g., http://3five.dev/wp-content/plugins/custom-user-profile-photo/img/placeholder.gif
-		'cupp_upload_meta' => filter_input( INPUT_POST, 'cupp_upload_meta', FILTER_SANITIZE_URL ),
+		'cupp_upload_meta'      => filter_input( INPUT_POST, 'cupp_upload_meta', FILTER_SANITIZE_URL ),
 
 		// Edit path, e.g., /wp-admin/post.php?post=32&action=edit&image-editor,
 		'cupp_upload_edit_meta' => filter_input( INPUT_POST, 'cupp_upload_edit_meta', FILTER_SANITIZE_URL ),
