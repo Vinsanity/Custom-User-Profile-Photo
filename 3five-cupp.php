@@ -277,7 +277,7 @@ add_filter( 'get_avatar', 'cupp_avatar', 1, 5 );
  *
  * @param $identifier
  *
- * @return false|WP_User
+ * @return WP_User
  */
 function cupp_get_user_by_id_or_email( $identifier ) {
 	if ( is_numeric( $identifier ) ) {
