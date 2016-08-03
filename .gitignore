@@ -1,0 +1,13 @@
+# OS Generated files #
+.DS_Store*git rm --cached
+ehthumbs.db
+Thumbs.db
+
+# SVN #
+.svn/
+
+# IntelliJ project files #
+.idea
+*.iml
+out
+gen
