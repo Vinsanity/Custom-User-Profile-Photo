@@ -84,7 +84,7 @@ function cupp_profile_img_fields( $user ) {
 	$button_text     = $upload_url ? 'Change Current Image' : 'Upload New Image';
 
 	if ( $upload_url ) {
-		$upload_edit_url = get_home_url() . $upload_edit_url;
+		$upload_edit_url = get_site_url() . $upload_edit_url;
 	}
 	?>
 
