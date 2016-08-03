@@ -275,18 +275,18 @@ add_filter( 'get_avatar', 'cupp_avatar', 1, 5 );
 /**
  * Get a WordPress User by ID or email
  *
- * @param $identifer
+ * @param $identifier
  *
  * @return false|WP_User
  */
-function cupp_get_user_by_id_or_email( $identifer ) {
-	if ( is_numeric( $identifer ) ) {
-		return get_user_by( 'id', (int) $identifer );
+function cupp_get_user_by_id_or_email( $identifier ) {
+	if ( is_numeric( $identifier ) ) {
+		return get_user_by( 'id', (int) $identifier );
 	}
 
-	if ( property_exists( $identifer, 'user_id' ) ) {
-		return get_user_by( 'id', (int) $identifer->user_id );
+	if ( property_exists( $identifier, 'user_id' ) ) {
+		return get_user_by( 'id', (int) $identifier->user_id );
 	}
 
-	return get_user_by( 'email', $identifer );
+	return get_user_by( 'email', $identifier );
 }
