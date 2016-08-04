@@ -201,11 +201,6 @@ function cupp_save_img_meta( $user_id ) {
 		'cupp_upload_edit_meta' => filter_input( INPUT_POST, 'cupp_upload_edit_meta', FILTER_SANITIZE_URL ),
 	);
 
-	if ( count( $values ) !== count( array_filter( $values ) ) ) {
-		$test = 'true';
-		// do something
-	}
-
 	foreach ( $values as $key => $value ) {
 		update_user_meta( $user_id, $key, $value ); // @codingStandardsIgnoreLine
 	}
@@ -301,61 +296,89 @@ function cupp_get_user_by_id_or_email( $identifier ) {
 	return get_user_by( 'email', $identifier );
 }
 
+
 /**
- * Hook: profile_update
- *
  * @param $user_id
  * @param $old_user_data
  */
-function cupp_profile_update( $user_id, $old_user_data ) {
+function cupp_profile_update_hook( $user_id, $old_user_data ) {
 	if ( ! $user = cupp_get_user_by_id_or_email( $user_id ) ) {
 		return;
 	}
 
-	foreach ( array( 'cupp_meta', 'cupp_upload_meta', 'cupp_edit_meta' ) as $meta ) {
-		$data[ $meta ] = get_the_author_meta( $meta, $user_id ); // @codingStandardsIgnoreLine
+	if ( $img_data = get_the_author_meta( 'cupp_upload_meta', $user_id ) ) {
+		cupp_maybe_attach_image_to_profile( $user_id, $img_data );
 	}
+}
 
-	if ( ! empty( $data['cupp_meta'] ) ) {
-		$test = 'this is a test';
-	}
+add_action( 'profile_update', 'cupp_profile_update_hook', 10, 2 );
 
-	if ( ! empty( $data['cupp_upload_meta'] ) ) {
-		// Upload isn't in the media library
-		if ( ! attachment_url_to_postid( $data['cupp_upload_meta'] ) ) {
-			$path = explode( '/uploads/', $data['cupp_upload_meta'] );
-			$upload_path = wp_get_upload_dir();
-			$file_path = $upload_path['basedir'];
 
-			if ( 2 === count( $path ) ) {
-				$file_path .= '/' . $path[1];
-			}
+/**
+ * If the user has data in cupp_upload_meta but the image isn't visible to the media library, check if it's in the
+ * uploads directory and attach it to the user's profile.
+ *
+ * @param $user_id
+ * @param $img
+ */
+function cupp_maybe_attach_image_to_profile( $user_id, $img ) {
+	if ( ! attachment_url_to_postid( $img ) && cupp_file_upload_exists( $img ) ) {
+		$img_src = cupp_copy_image_to_media_library( $img, $user_id );
 
-			if ( file_exists( $file_path ) ) {
-				if ( $new_src = cupp_copy_image_to_media_library( $data['cupp_upload_meta'], $user_id ) ) {
-					update_user_meta( $user_id, 'cupp_upload_meta', $new_src );
-				}
-			}
+		// Copy to media library was successful
+		if ( $img_src ) {
+			update_user_meta( $user_id, 'cupp_upload_meta', $img_src ); // @codingStandardsIgnoreLine
 		}
 	}
 }
 
-add_action( 'profile_update', 'cupp_profile_update', 10, 2 );
+
+/**
+ * Check whether the file associated with the user's profile exists in the WordPress uploads directory. It's possible
+ * the file may exist in a custom path outside of what's visible to the Media Library.
+ *
+ * @param $data
+ *
+ * @return bool
+ */
+function cupp_file_upload_exists( $data ) {
+	$upload_path = wp_get_upload_dir();
+	$upload_url = $upload_path['baseurl'];
+	$file_path   = $upload_path['basedir'];
+	$path        = explode( $upload_url, $data ); // Split the path into two parts - upload directory and remaining file path
+
+	// Provided path didn't match the upload directory, or we somehow got too many array indexes.
+	if ( 2 !== count( $path ) ) {
+		return false;
+	}
+
+	// Append the file path to the uploads base directory.
+	$file_path .= '/' . $path[1];
+
+	if ( file_exists( $file_path ) ) {
+		return true;
+	}
+
+	return false;
+}
 
 
 /**
+ * Copy a file from a URL into the WordPress media library and return its new src path.
+ *
  * @param $image_url
+ * @param $user_id
  *
  * @return array|false
  */
 function cupp_copy_image_to_media_library( $image_url, $user_id ) {
+	// WordPress hasn't loaded these necessary files yet, so we'll require them here.
 	require_once( ABSPATH . 'wp-admin/includes/media.php' );
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
-	// Sideload image and return its source url
 	$new_img_id = attachment_url_to_postid( media_sideload_image( $image_url, $user_id, null, 'src' ) );
-	$new_img = wp_get_attachment_image_src( $new_img_id );
+	$new_img    = wp_get_attachment_image_src( $new_img_id, 'url' ); // We need the full size to get attachment_url_to_postid to work.
 
 	if ( is_array( $new_img ) ) {
 		return $new_img[0];
