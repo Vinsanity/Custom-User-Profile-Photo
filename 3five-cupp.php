@@ -83,7 +83,7 @@ function cupp_profile_img_fields( $user ) {
 	$upload_edit_url = get_the_author_meta( 'cupp_upload_edit_meta', $user->ID );
 	$button_text     = $upload_url ? 'Change Current Image' : 'Upload New Image';
 
-	if ( $upload_url ) {
+	if ( $upload_url && $upload_edit_url ) {
 		$upload_edit_url = get_site_url() . $upload_edit_url;
 	}
 	?>
@@ -196,6 +196,11 @@ function cupp_save_img_meta( $user_id ) {
 		'cupp_upload_edit_meta' => filter_input( INPUT_POST, 'cupp_upload_edit_meta', FILTER_SANITIZE_URL ),
 	);
 
+	if ( count( $values ) !== count( array_filter( $values ) ) ) {
+		$test = 'true';
+		// do something
+	}
+
 	foreach ( $values as $key => $value ) {
 		update_user_meta( $user_id, $key, $value ); // @codingStandardsIgnoreLine
 	}
@@ -238,7 +243,7 @@ function get_cupp_meta( $user_id, $size = 'thumbnail' ) {
 		// Retrieve the thumbnail size of our image. Should return an array with first index value containing the URL.
 		$image_thumb = wp_get_attachment_image_src( $attachment_id, $size );
 
-		return isset( $image_thumb[0] ) ? $image_thumb[0] : '';
+		return $attachment_upload_url;
 	}
 
 	// Finally, check for image from an external URL. If none exists, return an empty string.
@@ -289,4 +294,63 @@ function cupp_get_user_by_id_or_email( $identifier ) {
 	}
 
 	return get_user_by( 'email', $identifier );
+}
+
+/**
+ * Hook: profile_update
+ *
+ * @param $user_id
+ * @param $old_user_data
+ */
+function cupp_profile_update( $user_id, $old_user_data ) {
+	if ( ! $user = cupp_get_user_by_id_or_email( $user_id ) ) {
+		return;
+	}
+
+	foreach ( array( 'cupp_meta', 'cupp_upload_meta', 'cupp_edit_meta' ) as $meta ) {
+		$data[ $meta ] = get_the_author_meta( $meta, $user_id ); // @codingStandardsIgnoreLine
+	}
+
+	if ( ! empty( $data['cupp_upload_meta'] ) ) {
+		// Upload isn't in the media library
+		if ( ! attachment_url_to_postid( $data['cupp_upload_meta'] ) ) {
+			$path = explode( '/uploads/', $data['cupp_upload_meta'] );
+			$upload_path = wp_get_upload_dir();
+			$file_path = $upload_path['basedir'];
+
+			if ( 2 === count( $path ) ) {
+				$file_path .= '/' . $path[1];
+			}
+
+			if ( file_exists( $file_path ) ) {
+				if ( $new_src = cupp_copy_image_to_media_library( $data['cupp_upload_meta'], $user_id ) ) {
+					update_user_meta( $user_id, 'cupp_upload_meta', $new_src );
+				}
+			}
+		}
+	}
+}
+
+add_action( 'profile_update', 'cupp_profile_update', 10, 2 );
+
+
+/**
+ * @param $image_url
+ *
+ * @return array|false
+ */
+function cupp_copy_image_to_media_library( $image_url, $user_id ) {
+	require_once( ABSPATH . 'wp-admin/includes/media.php' );
+	require_once( ABSPATH . 'wp-admin/includes/file.php' );
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	// Sideload image and return its source url
+	$new_img_id = attachment_url_to_postid( media_sideload_image( $image_url, $user_id, null, 'src' ) );
+	$new_img = wp_get_attachment_image_src( $new_img_id );
+
+	if ( is_array( $new_img ) ) {
+		return $new_img[0];
+	}
+
+	return '';
 }
