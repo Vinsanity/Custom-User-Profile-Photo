@@ -77,14 +77,27 @@ function cupp_profile_img_fields( $user ) {
 		return;
 	}
 
-	// vars
+	// Custom image data
 	$url             = get_the_author_meta( 'cupp_meta', $user->ID );
 	$upload_url      = get_the_author_meta( 'cupp_upload_meta', $user->ID );
-	$upload_edit_url = get_the_author_meta( 'cupp_upload_edit_meta', $user->ID );
-	$button_text     = $upload_url ? 'Change Current Image' : 'Upload New Image';
+	$upload_edit_url = '';
 
-	if ( $upload_url && $upload_edit_url ) {
-		$upload_edit_url = get_site_url() . $upload_edit_url;
+	if ( $attachment_id = attachment_url_to_postid( $upload_url ) ) {
+		$upload_edit_url = get_site_url() . '/wp-admin/post.php?post=' . $attachment_id . '&action=edit&image-editor';
+	}
+
+	// Classes for settings presentation
+	$img_class   = 'cupp-current-img';
+	$edit_class  = $upload_edit_url ? 'uploaded' : 'single';
+	$button_text = $attachment_id ? 'Change Current Image' : 'Upload New Image';
+
+	// Placeholder fallbacks if there is no custom image
+	$current_url = $url ? $url : $upload_url;
+
+	if ( ! $current_url ) {
+		$current_url = plugins_url( 'custom-user-profile-photo/img/placeholder.gif' );
+		$img_class .= ' placeholder';
+		$edit_class = '';
 	}
 	?>
 
@@ -97,28 +110,20 @@ function cupp_profile_img_fields( $user ) {
 				<td>
 					<!-- Outputs the image after save -->
 					<div id="current_img">
-						<?php if ( $upload_url ): ?>
-							<img class="cupp-current-img" src="<?php echo esc_url( $upload_url ); ?>"/>
+						<img class="<?php esc_attr_e( $img_class ); ?>" src="<?php echo esc_url( $current_url ); ?>"/>
 
-							<div class="edit_options uploaded">
+						<?php if ( $edit_class ) : // Presentation for editing the image ?>
+							<div class="edit_options <?php esc_attr_e( $edit_class ); ?>">
 								<a class="remove_img">
 									<span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span>
 								</a>
 
-								<a class="edit_img" href="<?php echo esc_url( $upload_edit_url ); ?>" target="_blank">
-									<span><?php _e( 'Edit', 'custom-user-profile-photo' ); ?></span>
-								</a>
+								<?php if ( $upload_edit_url ) : ?>
+									<a class="edit_img" href="<?php echo esc_url( $upload_edit_url ); ?>" target="_blank">
+										<span><?php _e( 'Edit', 'custom-user-profile-photo' ); ?></span>
+									</a>
+								<?php endif; ?>
 							</div>
-						<?php elseif ( $url ) : ?>
-							<img class="cupp-current-img" src="<?php echo esc_url( $url ); ?>"/>
-							<div class="edit_options single">
-								<a class="remove_img">
-									<span><?php _e( 'Remove', 'custom-user-profile-photo' ); ?></span>
-								</a>
-							</div>
-						<?php else : ?>
-							<img class="cupp-current-img placeholder"
-							     src="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>"/>
 						<?php endif; ?>
 					</div>
 
@@ -309,6 +314,10 @@ function cupp_profile_update( $user_id, $old_user_data ) {
 
 	foreach ( array( 'cupp_meta', 'cupp_upload_meta', 'cupp_edit_meta' ) as $meta ) {
 		$data[ $meta ] = get_the_author_meta( $meta, $user_id ); // @codingStandardsIgnoreLine
+	}
+
+	if ( ! empty( $data['cupp_meta'] ) ) {
+		$test = 'this is a test';
 	}
 
 	if ( ! empty( $data['cupp_upload_meta'] ) ) {
