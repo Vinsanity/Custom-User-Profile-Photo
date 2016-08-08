@@ -25,5 +25,5 @@ function get_cupp_meta( $user_id, $size = 'thumbnail' ) {
 
 	$user = new Custom_User_Profile_Photo_User( $user_id );
 
-	return $user->get_avatar_url( $size );
+	return $user->image->get_url( $size );
 }

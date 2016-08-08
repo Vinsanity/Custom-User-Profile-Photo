@@ -53,13 +53,4 @@ class Custom_User_Profile_Photo_User {
 
 		return $user ? $user : false;
 	}
-
-	/**
-	 * @param string $size
-	 *
-	 * @return mixed|string
-	 */
-	public function get_avatar_url( $size = 'thumbnail' ) {
-		return $this->image->get_url( $size );
-	}
 }

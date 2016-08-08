@@ -20,6 +20,16 @@ class Custom_User_Profile_Photo_User_Image {
 	private $upload_url;
 
 	/**
+	 * @var
+	 */
+	private $height = 'auto';
+
+	/**
+	 * @var
+	 */
+	private $width = 'auto';
+
+	/**
 	 * Custom_User_Profile_Photo_User_Image constructor.
 	 *
 	 * @param Custom_User_Profile_Photo_User $user
@@ -39,10 +49,53 @@ class Custom_User_Profile_Photo_User_Image {
 		// Check first for a custom uploaded image
 		if ( $this->upload_url ) {
 			$img = wp_get_attachment_image_src( attachment_url_to_postid( $this->upload_url ), $size );
+
+			if ( is_int( $size ) ) {
+				$this->set_dimensions( $img, $size );
+			} else {
+				$this->width  = $img[1];
+				$this->height = $img[2];
+			}
+
 			return $img[0];
 		}
 
 		return $this->url ? $this->url : '';
+	}
+
+	/**
+	 * Set constraints on the image so it does not stretch.
+	 *
+	 * @param $img
+	 * @param $size
+	 */
+	private function set_dimensions( $img, $size ) {
+		$width  = $img[1];
+		$height = $img[2];
+
+		if ( $height >= $size || $width >= $size ) {
+			$this->height = $height > $width ? $size : 'auto';
+			$this->width  = $height > $width ? 'auto' : $size;
+
+			return;
+		}
+
+		$this->height = $height > $width ? $height : 'auto';
+		$this->width  = $height > $width ? 'auto' : $width;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_width() {
+		return $this->width;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_height() {
+		return $this->height;
 	}
 
 	/**

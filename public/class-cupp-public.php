@@ -65,11 +65,17 @@ class Custom_User_Profile_Photo_Public {
 	 *
 	 * @return string
 	 */
-	public function cupp_avatar( $avatar, $identifier, $size = 'thumbnail', $alt ) {
+	public function cupp_avatar( $avatar, $identifier, $size = 96, $alt ) {
 		$user = new Custom_User_Profile_Photo_User( $identifier );
 
-		if ( $custom_avatar = $user->get_avatar_url( $size ) ) {
-			return "<img alt='{$alt}' src='{$custom_avatar}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+		if ( $custom_avatar = $user->image->get_url( $size ) ) {
+			if ( $user->image->get_upload_url() ) {
+				return "<img alt='{$alt}' src='{$custom_avatar}' class='avatar avatar-{$size} photo'"
+				       . "height='{$user->image->get_height()}' width='{$user->image->get_width()}' />";
+			}
+
+			return "<img alt='{$alt}' src='{$custom_avatar}' class='avatar avatar-{$size} photo'"
+			       . "height='auto' width='{$size}' />";
 		}
 
 		return $avatar;
