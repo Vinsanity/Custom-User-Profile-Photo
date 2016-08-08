@@ -57,5 +57,5 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . 'src/class-cupp.php';
 
-$plugin = new Custom_User_Profile_Photo( plugin_dir_path( __FILE__ ) );
+$plugin = new CUPP( plugin_dir_path( __FILE__ ) );
 $plugin->run();

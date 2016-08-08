@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Class Custom_User_Profile_Photo
+ * Class CUPP
  */
-class Custom_User_Profile_Photo {
+class CUPP {
 	/**
 	 * @var
 	 */
 	public $plugin_path;
 
 	/**
-	 * @var $loader Custom_User_Profile_Photo_Loader
+	 * @var $loader CUPP_Loader
 	 */
 	public $loader;
 
@@ -25,7 +25,7 @@ class Custom_User_Profile_Photo {
 	public $version = '0.4';
 
 	/**
-	 * Custom_User_Profile_Photo constructor.
+	 * CUPP constructor.
 	 *
 	 * @param $plugin_path
 	 */
@@ -85,20 +85,20 @@ class Custom_User_Profile_Photo {
 		 */
 		require_once $this->plugin_path . '/public/class-cupp-public.php';
 
-		$this->loader = new Custom_User_Profile_Photo_Loader();
+		$this->loader = new CUPP_Loader();
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Custom_User_Profile_Photo_i18n class in order to set the domain and to register the hook
+	 * Uses the CUPP_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function set_locale() {
-		$plugin_i18n = new Custom_User_Profile_Photo_i18n();
+		$plugin_i18n = new CUPP_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
@@ -111,7 +111,7 @@ class Custom_User_Profile_Photo {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-		$plugin_admin = new Custom_User_Profile_Photo_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new CUPP_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		// Enqueue scripts
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -135,7 +135,7 @@ class Custom_User_Profile_Photo {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$plugin_public = new Custom_User_Profile_Photo_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new CUPP_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_filter( 'get_avatar', $plugin_public, 'cupp_avatar', 1, 5 );
 	}
@@ -164,7 +164,7 @@ class Custom_User_Profile_Photo {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Custom_User_Profile_Photo_Loader    Orchestrates the hooks of the plugin.
+	 * @return    CUPP_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

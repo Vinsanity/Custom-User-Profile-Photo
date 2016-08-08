@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class Custom_User_Profile_Photo_User_Image
+ * Class CUPP_User_Image
  */
-class Custom_User_Profile_Photo_User_Image {
+class CUPP_User_Image {
 	/**
-	 * @var Custom_User_Profile_Photo_User $user
+	 * @var CUPP_User $user
 	 */
 	private $user;
 
@@ -30,11 +30,11 @@ class Custom_User_Profile_Photo_User_Image {
 	private $width = 'auto';
 
 	/**
-	 * Custom_User_Profile_Photo_User_Image constructor.
+	 * CUPP_User_Image constructor.
 	 *
-	 * @param Custom_User_Profile_Photo_User $user
+	 * @param CUPP_User $user
 	 */
-	public function __construct( Custom_User_Profile_Photo_User $user ) {
+	public function __construct( CUPP_User $user ) {
 		$this->user       = $user;
 		$this->url        = get_the_author_meta( 'cupp_meta', $this->user->id );
 		$this->upload_url = get_the_author_meta( 'cupp_upload_meta', $this->user->id );

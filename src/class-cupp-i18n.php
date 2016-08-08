@@ -9,8 +9,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/includes
+ * @package    CUPP
+ * @subpackage CUPP/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/includes
+ * @package    CUPP
+ * @subpackage CUPP/includes
  * @author     Your Name <email@example.com>
  */
-class Custom_User_Profile_Photo_i18n {
+class CUPP_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *

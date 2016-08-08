@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/includes
+ * @package    CUPP
+ * @subpackage CUPP/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/includes
+ * @package    CUPP
+ * @subpackage CUPP/includes
  * @author     Your Name <email@example.com>
  */
-class Custom_User_Profile_Photo_Loader {
+class CUPP_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

@@ -2,9 +2,9 @@
 require_once plugin_dir_path( __FILE__ ) . '/class-cupp-user-image.php';
 
 /**
- * Class Custom_User_Profile_Photo_User
+ * Class CUPP_User
  */
-class Custom_User_Profile_Photo_User {
+class CUPP_User {
 	/**
 	 * @var false|WP_User
 	 */
@@ -16,19 +16,13 @@ class Custom_User_Profile_Photo_User {
 	public $id;
 
 	/**
-	 * @var array
-	 */
-	public $image;
-
-	/**
-	 * Custom_User_Profile_Photo_User constructor.
+	 * CUPP_User constructor.
 	 *
 	 * @param $identifier
 	 */
 	public function __construct( $identifier ) {
 		$this->user  = $this->get_by_identifier( $identifier );
 		$this->id    = $this->user ? $this->user->ID : 0;
-		$this->image = new Custom_User_Profile_Photo_User_Image( $this );
 	}
 
 	/**

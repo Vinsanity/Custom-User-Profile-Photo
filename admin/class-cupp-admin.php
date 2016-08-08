@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/admin
+ * @package    CUPP
+ * @subpackage CUPP/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Custom_User_Profile_Photo
- * @subpackage Custom_User_Profile_Photo/admin
+ * @package    CUPP
+ * @subpackage CUPP/admin
  * @author     Your Name <email@example.com>
  */
-class Custom_User_Profile_Photo_Admin {
+class CUPP_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
@@ -62,10 +62,10 @@ class Custom_User_Profile_Photo_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Custom_User_Profile_Photo_Loader as all of the hooks are defined
+		 * defined in CUPP_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Custom_User_Profile_Photo_Loader will then create the relationship
+		 * The CUPP_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -83,10 +83,10 @@ class Custom_User_Profile_Photo_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Custom_User_Profile_Photo_Loader as all of the hooks are defined
+		 * defined in CUPP_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Custom_User_Profile_Photo_Loader will then create the relationship
+		 * The CUPP_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -125,17 +125,19 @@ class Custom_User_Profile_Photo_Admin {
 	 * @param $old_user_data
 	 */
 	public function change_image_on_profile_update( $user_id, $old_user_data ) {
-		$user = new Custom_User_Profile_Photo_User( $user_id );
+		$image = new CUPP_User_Image( new CUPP_User( $user_id ) );
 
-		if ( ! $user->image->get_upload_url() ) {
+		if ( ! $image->get_upload_url() ) {
 			return;
 		}
 
-		$user->image->maybe_attach_to_user_profile();
+		$image->maybe_attach_to_user_profile();
 	}
 
 	/**
 	 * Show the new image field in the user profile page.
+	 *
+	 * Note: variables that appear "unused" are in fact used by the included template file.
 	 *
 	 * @param $user
 	 */
@@ -144,11 +146,11 @@ class Custom_User_Profile_Photo_Admin {
 			return;
 		}
 
-		$user = new Custom_User_Profile_Photo_User( $user );
+		$image = new CUPP_User_Image( new CUPP_User( $user ) );
 
 		// Custom image data
-		$url             = $user->image->get_external_url();
-		$upload_url      = $user->image->get_upload_url();
+		$url             = $image->get_external_url();
+		$upload_url      = $image->get_upload_url();
 		$upload_edit_url = '';
 
 		if ( $attachment_id = attachment_url_to_postid( $upload_url ) ) {

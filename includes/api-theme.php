@@ -23,7 +23,7 @@ function get_cupp_meta( $user_id, $size = 'thumbnail' ) {
 		$user_id = $post->post_author;
 	}
 
-	$user = new Custom_User_Profile_Photo_User( $user_id );
+	$image = new CUPP_User_Image( new CUPP_User( $user_id ) );
 
-	return $user->image->get_url( $size );
+	return $image->get_url( $size );
 }
