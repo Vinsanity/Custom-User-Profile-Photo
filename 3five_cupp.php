@@ -10,7 +10,7 @@
  * Author URI: http://3five.com
  * Text Domain: custom-user-profile-photo
  * Domain Path: /languages/
- * Version: 0.4
+ * Version: 0.5
  */
 
 /**
@@ -53,6 +53,13 @@
  *  • Mike Jolley - https://gist.github.com/mikejolley/3a3b366cb62661727263#file-gistfile1-php
  */
 
+/**
+ * Load Translations.
+ */
+function cupp_load_plugin_textdomain() {
+	load_plugin_textdomain( 'custom-user-profile-photo', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'cupp_load_plugin_textdomain' );
 
 /**
  * Enqueue scripts and styles

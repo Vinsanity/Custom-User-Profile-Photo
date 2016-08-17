@@ -1,10 +1,10 @@
 === Plugin Name ===
-Contributors: 3five, VincentListrani
+Contributors: 3five, VincentListrani, jmichaelward
 Donate link: 
-Tags: custom profile photo, user profile, profile photo, user profile photo
+Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
-Tested up to: 4.2.3
-Stable tag: 0.4
+Tested up to: 4.6
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,15 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 == Changelog ==
 
+= 0.5 =
+* Major Update - please be sure to backup your site and db.
+* Replaced `update_user_meta` with `update_user_attribute` per WordPress VIP Standards.
+* Replaced `get_home_url` with `get_site_url` for users where the edit image link was returning a 404. Credit: SOMTIJDS
+* Fixed textdomain loading issue.
+* Added Spanish translation. Credit: David Pérez
+* Updated and formatted code per PHPCS. Credit: jmichaelward
+* Refactored multiple functions and variables for simplicity and compatibility. Credit: jmichaelward
+
 = 0.4 =
 * Major Update - please be sure to backup your site and db. 
 * The plugin now overrides the WordPress avatar by filtering the get_avatar() hook.
@@ -112,6 +121,15 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 == Upgrade Notice ==
 
+= 0.5 =
+Major Update - please be sure to backup your site and db. The plugin was refactored and restructured per PHPCS. Some functions were swapped for ones that were less costly or could cause a 404 response. Fixed textdomain issue for translations and added Spanish translation.
+
+= 0.4 =
+Major Update - please be sure to backup your site and db. The plugin now filters and overrides `get_avatar()`. This could affect your theme or other plugins you have installed.
+
+= 0.3 =
+Minor improvement.
+
 = 0.2.6 =
 Bug Fixes and minor improvements.
 
@@ -120,3 +138,14 @@ Bug Fixes and minor improvements.
 
 = 0.2.3 =
 Beta Release
+
+== Translations ==
+
+* English - default, always included
+* Dutch
+* Hungarian
+* Spanish
+
+== Credits ==
+
+Thanks to [Olaf Lederer](https://profiles.wordpress.org/finalwebsites/), [Harkály Gergő](https://github.com/harkalygergo), [sqhendr](https://profiles.wordpress.org/sqhendr/), [SOMTIJDS](https://profiles.wordpress.org/somtijds/), [David Pérez](https://www.closemarketing.es)
