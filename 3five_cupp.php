@@ -2,12 +2,14 @@
 /*
 Plugin Name: Custom User Profile Photo
 Plugin URI: http://3five.com
-Description: A simple and effective custom WordPress user profile photo plugin. This plugin leverages the WordPress Media Uploader functionality. To use this plugin go to the users tab and select a user. The new field can be found below the password fields for that user.
+Description: A simple and effective custom WordPress user profile photo plugin. This plugin leverages the WordPress
+Media Uploader functionality. To use this plugin go to the users tab and select a user. The new field can be found
+below the password fields for that user.
 Author: 3five
 Author URI: http://3five.com
 Text Domain: custom-user-profile-photo
 Domain Path: /languages/
-Version: 0.4
+Version: 0.5
 */
 
 /**
@@ -29,8 +31,8 @@ Version: 0.4
  * parameters.
  *
  * @param WP_User|int $user_id Default: $post->post_author. Will accept any valid user ID passed into this parameter.
- * @param string      $size    Default: 'thumbnail'. Accepts all default WordPress sizes and any custom sizes made by the
- *                             add_image_size() function.
+ * @param string      $size    Default: 'thumbnail'. Accepts all default WordPress sizes and any custom sizes made by
+ *                             the add_image_size() function.
  *
  * @return {url}      Use this inside the src attribute of an image tag or where you need to call the image url.
  *
@@ -50,16 +52,23 @@ Version: 0.4
  *  • Mike Jolley - https://gist.github.com/mikejolley/3a3b366cb62661727263#file-gistfile1-php
  */
 
+/**
+ * Load Translations.
+ */
+function cupp_load_plugin_textdomain() {
+	load_plugin_textdomain( 'custom-user-profile-photo', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'cupp_load_plugin_textdomain' );
 
 /**
  * Enqueue scripts and styles
  */
 function cupp_enqueue_scripts_styles() {
-	// Register
+	// Register.
 	wp_register_style( 'cupp_admin_css', plugins_url( 'custom-user-profile-photo/css/styles.css' ), false, '1.0.0', 'all' );
 	wp_register_script( 'cupp_admin_js', plugins_url( 'custom-user-profile-photo/js/scripts.js' ), array( 'jquery' ), '1.0.0', true );
 
-	// Enqueue
+	// Enqueue.
 	wp_enqueue_style( 'cupp_admin_css' );
 	wp_enqueue_script( 'cupp_admin_js' );
 }
@@ -70,7 +79,7 @@ add_action( 'admin_enqueue_scripts', 'cupp_enqueue_scripts_styles' );
 /**
  * Show the new image field in the user profile page.
  *
- * @param $user
+ * @param object $user User object.
  */
 function cupp_profile_img_fields( $user ) {
 	if ( ! current_user_can( 'upload_files' ) ) {
@@ -125,28 +134,31 @@ function cupp_profile_img_fields( $user ) {
 					<!-- Select an option: Upload to WPMU or External URL -->
 					<div id="cupp_options">
 						<input type="radio" id="upload_option" name="img_option" value="upload" class="tog" checked>
-						<label for="upload_option"><?php _e( 'Upload New Image', 'custom-user-profile-photo' ); ?></label><br>
+						<label
+							for="upload_option"><?php _e( 'Upload New Image', 'custom-user-profile-photo' ); ?></label><br>
 
 						<input type="radio" id="external_option" name="img_option" value="external" class="tog">
-						<label for="external_option"><?php _e( 'Use External URL', 'custom-user-profile-photo' ); ?></label><br>
+						<label
+							for="external_option"><?php _e( 'Use External URL', 'custom-user-profile-photo' ); ?></label><br>
 					</div>
 
 					<!-- Hold the value here if this is a WPMU image -->
 					<div id="cupp_upload">
 						<input class="hidden" type="hidden" name="cupp_placeholder_meta" id="cupp_placeholder_meta"
-						       value="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>" />
+						       value="<?php echo esc_url( plugins_url( 'custom-user-profile-photo/img/placeholder.gif' ) ); ?>"/>
 						<input class="hidden" type="hidden" name="cupp_upload_meta" id="cupp_upload_meta"
-						       value="<?php echo esc_url_raw( $upload_url ); ?>" />
+						       value="<?php echo esc_url_raw( $upload_url ); ?>"/>
 						<input class="hidden" type="hidden" name="cupp_upload_edit_meta" id="cupp_upload_edit_meta"
-						       value="<?php echo esc_url_raw( $upload_edit_url ); ?>" />
+						       value="<?php echo esc_url_raw( $upload_edit_url ); ?>"/>
 						<input id="uploadimage" type='button' class="cupp_wpmu_button button-primary"
-						       value="<?php _e( esc_attr( $button_text ), 'custom-user-profile-photo' ); ?>" />
-						<br />
+						       value="<?php _e( esc_attr( $button_text ), 'custom-user-profile-photo' ); ?>"/>
+						<br/>
 					</div>
 
 					<!-- Outputs the text field and displays the URL of the image retrieved by the media uploader -->
 					<div id="cupp_external">
-						<input class="regular-text" type="text" name="cupp_meta" id="cupp_meta" value="<?php echo esc_url_raw( $url ); ?>"  />
+						<input class="regular-text" type="text" name="cupp_meta" id="cupp_meta"
+						       value="<?php echo esc_url_raw( $url ); ?>"/>
 					</div>
 
 					<!-- Outputs the save button -->
@@ -167,7 +179,7 @@ function cupp_profile_img_fields( $user ) {
 	</div> <!-- end #cupp_container -->
 
 	<?php
-	// Enqueue the WordPress Media Uploader
+	// Enqueue the WordPress Media Uploader.
 	wp_enqueue_media();
 }
 
@@ -178,7 +190,7 @@ add_action( 'edit_user_profile', 'cupp_profile_img_fields' );
 /**
  * Save the new user CUPP url.
  *
- * @param int $user_id
+ * @param int $user_id ID of the user's profile being saved.
  */
 function cupp_save_img_meta( $user_id ) {
 	if ( ! current_user_can( 'upload_files', $user_id ) ) {
@@ -189,15 +201,15 @@ function cupp_save_img_meta( $user_id ) {
 		// String value. Empty in this case.
 		'cupp_meta'             => filter_input( INPUT_POST, 'cupp_meta', FILTER_SANITIZE_STRING ),
 
-		// File path, e.g., http://3five.dev/wp-content/plugins/custom-user-profile-photo/img/placeholder.gif
+		// File path, e.g., http://3five.dev/wp-content/plugins/custom-user-profile-photo/img/placeholder.gif.
 		'cupp_upload_meta'      => filter_input( INPUT_POST, 'cupp_upload_meta', FILTER_SANITIZE_URL ),
 
-		// Edit path, e.g., /wp-admin/post.php?post=32&action=edit&image-editor,
+		// Edit path, e.g., /wp-admin/post.php?post=32&action=edit&image-editor.
 		'cupp_upload_edit_meta' => filter_input( INPUT_POST, 'cupp_upload_edit_meta', FILTER_SANITIZE_URL ),
 	);
 
 	foreach ( $values as $key => $value ) {
-		update_user_meta( $user_id, $key, $value ); // @codingStandardsIgnoreLine
+		update_user_attribute( $user_id, $key, $value );
 	}
 }
 
@@ -207,8 +219,8 @@ add_action( 'edit_user_profile_update', 'cupp_save_img_meta' );
 /**
  * Retrieve the appropriate image size
  *
- * @param int $user_id Default: $post->post_author. Will accept any valid user ID passed into this parameter.
- * @param string      $size    Default: 'thumbnail'. Accepts all default WordPress sizes and any custom sizes made by
+ * @param int    $user_id      Default: $post->post_author. Will accept any valid user ID passed into this parameter.
+ * @param string $size         Default: 'thumbnail'. Accepts all default WordPress sizes and any custom sizes made by
  *                             the add_image_size() function.
  *
  * @return string      (Url) Use this inside the src attribute of an image tag or where you need to call the image url.
@@ -228,11 +240,11 @@ function get_cupp_meta( $user_id, $size = 'thumbnail' ) {
 		$user_id = $post->post_author;
 	}
 
-	// Check first for a custom uploaded image
+	// Check first for a custom uploaded image.
 	$attachment_upload_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $user_id ) );
 
 	if ( $attachment_upload_url ) {
-		// grabs the id from the URL using the WordPress function attachment_url_to_postid @since 4.0.0
+		// Grabs the id from the URL using the WordPress function attachment_url_to_postid @since 4.0.0.
 		$attachment_id = attachment_url_to_postid( $attachment_upload_url );
 
 		// Retrieve the thumbnail size of our image. Should return an array with first index value containing the URL.
@@ -253,10 +265,10 @@ function get_cupp_meta( $user_id, $size = 'thumbnail' ) {
  *
  * Replaces the WordPress avatar with your custom photo using the get_avatar hook.
  *
- * @param $avatar
- * @param int|object|string $identifier
- * @param $size
- * @param $alt
+ * @param string            $avatar     Image tag for the user's avatar.
+ * @param int|object|string $identifier User object, UD or email address.
+ * @param string            $size       Image size.
+ * @param string            $alt        Alt text for the image tag.
  *
  * @return string
  */
@@ -275,7 +287,7 @@ add_filter( 'get_avatar', 'cupp_avatar', 1, 5 );
 /**
  * Get a WordPress User by ID or email
  *
- * @param $identifier
+ * @param int|object|string $identifier User object, UD or email address.
  *
  * @return WP_User
  */
