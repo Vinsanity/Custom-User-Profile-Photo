@@ -4,7 +4,7 @@ Donate link:
 Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
 Tested up to: 4.6
-Stable tag: 0.5
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ This plugin will add a custom set of fields to the user profile page which will 
 
 You can add/change/edit uploaded photos directly from the user profile page. The external option allows you to provide a URL to the external image or remove it.
 
-**As of v0.4**, the plugin now filters the get_avatar() function found in most WordPress themes. 
+**As of v0.4**, the plugin now filters the get_avatar() function found in most WordPress themes.
 
 Simply go to the users section and select a user or select "Your Profile" depending on your permission level. The new fields are added to the bottom of the user profile page. Choose which type of photo you want to use. Upload an image or add an external url. Then press the Update Profile button.
 
@@ -59,14 +59,14 @@ You will need to place the code above in each area of your theme where you wish 
 
 = Who can upload and manage these images? =
 
-Currently, only a user with the upload_files capability can use this option. 
+Currently, only a user with the upload_files capability can use this option.
 Editors and Admins can upload and edit files.
 Authors can only upload files.
 Subscribers and Contributors cannot do either so an Admin will need to do this for them.
 
-= I installed the plugin but I want to customize the output and placement of the image. Is this possible? = 
+= I installed the plugin but I want to customize the output and placement of the image. Is this possible? =
 
-Yes, you can still customize the output by using the get_cupp_meta() function. Please reference the code snippet below or on the Description tab. 
+Yes, you can still customize the output by using the get_cupp_meta() function. Please reference the code snippet below or on the Description tab.
 `<?php echo get_cupp_meta($user_ID, $size); ?>`
 Where the $user_ID is the users ID number and the size is a registered image size like 'thumbnail' or an array like `array(50,50)`.
 
@@ -84,8 +84,12 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 == Changelog ==
 
+= 0.5.1 =
+* Fixed issue with `update_user_attribute`.
+
 = 0.5 =
 * Major Update - please be sure to backup your site and db.
+* Replaced `update_user_meta` with `update_user_attribute` per WordPress VIP Standards.
 * Replaced `get_home_url` with `get_site_url` for users where the edit image link was returning a 404. Credit: SOMTIJDS
 * Fixed textdomain loading issue.
 * Added Spanish translation. Credit: David Pérez
@@ -93,7 +97,7 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 * Refactored multiple functions and variables for simplicity and compatibility. Credit: jmichaelward
 
 = 0.4 =
-* Major Update - please be sure to backup your site and db. 
+* Major Update - please be sure to backup your site and db.
 * The plugin now overrides the WordPress avatar by filtering the get_avatar() hook.
 * The get_cupp_meta() function still exists and can be used to customize the output (this will eventually be deprecated).
 
@@ -123,6 +127,9 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 * Beta version release.
 
 == Upgrade Notice ==
+
+= 0.5.1 =
+Fixed issue with update_user_attribute.
 
 = 0.5 =
 Major Update - please be sure to backup your site and db. The plugin was refactored and restructured per PHPCS. Some functions were swapped for ones that were less costly or could cause a 404 response. Fixed textdomain issue for translations and added Spanish translation.

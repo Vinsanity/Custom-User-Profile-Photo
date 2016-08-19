@@ -4,7 +4,7 @@ Donate link:
 Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
 Tested up to: 4.6
-Stable tag: 0.5
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 == Changelog ==
 
+= 0.5.1 =
+* Fixed issue with `update_user_attribute`.
+
 = 0.5 =
 * Major Update - please be sure to backup your site and db.
 * Replaced `update_user_meta` with `update_user_attribute` per WordPress VIP Standards.
@@ -124,6 +127,9 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 * Beta version release.
 
 == Upgrade Notice ==
+
+= 0.5.1 =
+Fixed issue with update_user_attribute.
 
 = 0.5 =
 Major Update - please be sure to backup your site and db. The plugin was refactored and restructured per PHPCS. Some functions were swapped for ones that were less costly or could cause a 404 response. Fixed textdomain issue for translations and added Spanish translation.
