@@ -3,6 +3,18 @@ svn:wc:ra_dav:version-url
 V 59
 /!svn/ver/1201141/custom-user-profile-photo/trunk/languages
 END
+custom-user-profile-photo-es_ES.mo
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/1478954/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-es_ES.mo
+END
+custom-user-profile-photo-es_ES.po
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/1478954/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-es_ES.po
+END
 custom-user-profile-photo-nl_NL.mo
 K 25
 svn:wc:ra_dav:version-url
@@ -19,11 +31,17 @@ custom-user-profile-photo-hu_HU.mo
 K 25
 svn:wc:ra_dav:version-url
 V 94
-/!svn/ver/1201141/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-hu_HU.mo
+/!svn/ver/1478954/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-hu_HU.mo
+END
+custom-user-profile-photo.pot
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/1478954/custom-user-profile-photo/trunk/languages/custom-user-profile-photo.pot
 END
 custom-user-profile-photo-hu_HU.po
 K 25
 svn:wc:ra_dav:version-url
 V 94
-/!svn/ver/1201141/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-hu_HU.po
+/!svn/ver/1478954/custom-user-profile-photo/trunk/languages/custom-user-profile-photo-hu_HU.po
 END

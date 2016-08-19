@@ -209,7 +209,7 @@ function cupp_save_img_meta( $user_id ) {
 	);
 
 	foreach ( $values as $key => $value ) {
-		update_user_attribute( $user_id, $key, $value );
+		update_user_meta( $user_id, $key, $value );
 	}
 }
 

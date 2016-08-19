@@ -86,7 +86,6 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 = 0.5 =
 * Major Update - please be sure to backup your site and db.
-* Replaced `update_user_meta` with `update_user_attribute` per WordPress VIP Standards.
 * Replaced `get_home_url` with `get_site_url` for users where the edit image link was returning a 404. Credit: SOMTIJDS
 * Fixed textdomain loading issue.
 * Added Spanish translation. Credit: David Pérez
