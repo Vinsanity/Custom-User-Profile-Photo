@@ -9,7 +9,7 @@ Author: 3five
 Author URI: http://3five.com
 Text Domain: custom-user-profile-photo
 Domain Path: /languages/
-Version: 0.5
+Version: 0.5.1
 */
 
 /**
