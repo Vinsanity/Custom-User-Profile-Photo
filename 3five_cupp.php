@@ -9,7 +9,7 @@ Author: 3five
 Author URI: http://3five.com
 Text Domain: custom-user-profile-photo
 Domain Path: /languages/
-Version: 0.5.1
+Version: 0.5.2
 */
 
 /**
@@ -58,6 +58,7 @@ Version: 0.5.1
 function cupp_load_plugin_textdomain() {
 	load_plugin_textdomain( 'custom-user-profile-photo', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
+
 add_action( 'init', 'cupp_load_plugin_textdomain' );
 
 /**
@@ -135,11 +136,11 @@ function cupp_profile_img_fields( $user ) {
 					<div id="cupp_options">
 						<input type="radio" id="upload_option" name="img_option" value="upload" class="tog" checked>
 						<label
-							for="upload_option"><?php _e( 'Upload New Image', 'custom-user-profile-photo' ); ?></label><br>
+								for="upload_option"><?php _e( 'Upload New Image', 'custom-user-profile-photo' ); ?></label><br>
 
 						<input type="radio" id="external_option" name="img_option" value="external" class="tog">
 						<label
-							for="external_option"><?php _e( 'Use External URL', 'custom-user-profile-photo' ); ?></label><br>
+								for="external_option"><?php _e( 'Use External URL', 'custom-user-profile-photo' ); ?></label><br>
 					</div>
 
 					<!-- Hold the value here if this is a WPMU image -->
@@ -296,8 +297,8 @@ function cupp_get_user_by_id_or_email( $identifier ) {
 		return get_user_by( 'id', (int) $identifier );
 	}
 
-	if ( property_exists( $identifier, 'user_id' ) ) {
-		return get_user_by( 'id', (int) $identifier->user_id );
+	if ( is_object( $identifier ) && property_exists( $identifier, 'ID' ) ) {
+		return get_user_by( 'id', (int) $identifier->ID );
 	}
 
 	return get_user_by( 'email', $identifier );

@@ -3,8 +3,8 @@ Contributors: 3five, VincentListrani, jmichaelward
 Donate link: 
 Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
-Tested up to: 4.6
-Stable tag: 0.5.1
+Tested up to: 4.7.3
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,9 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 5. An example of getting this new image to display on the front-end.
 
 == Changelog ==
+
+= 0.5.2 =
+* Fixed issue with a PHP warning when getting the user with the WP_User object.
 
 = 0.5.1 =
 * Fixed issue with `update_user_attribute`.
