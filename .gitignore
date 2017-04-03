@@ -4,7 +4,7 @@ ehthumbs.db
 Thumbs.db
 
 # SVN #
-.svn/
+.svn*
 
 # IntelliJ project files #
 .idea

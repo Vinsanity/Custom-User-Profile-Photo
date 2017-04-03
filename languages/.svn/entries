@@ -1,14 +1,14 @@
 10
 
 dir
-1207655
-http://3five@plugins.svn.wordpress.org/custom-user-profile-photo/trunk/languages
-http://3five@plugins.svn.wordpress.org
+1478987
+https://plugins.svn.wordpress.org/custom-user-profile-photo/trunk/languages
+https://plugins.svn.wordpress.org
 
 
 
-2015-07-17T17:34:39.449255Z
-1201141
+2016-08-19T18:07:07.394506Z
+1478954
 3five
 
 
@@ -28,11 +28,11 @@ b8457f37-d9ea-0310-8a92-e5e31aec5664
 
 custom-user-profile-photo-es_ES.mo
 file
-1478954
 
 
 
-2015-12-02T17:54:37.000000Z
+
+2017-04-03T19:21:29.000000Z
 a4067fac2bb74b240c66339a34a374bf
 2016-08-19T18:07:07.394506Z
 1478954
@@ -62,11 +62,11 @@ has-props
 
 custom-user-profile-photo-es_ES.po
 file
-1478954
 
 
 
-2015-12-02T17:54:41.000000Z
+
+2017-04-03T19:21:29.000000Z
 8502a92c8920070bb8e4b519e80eca3f
 2016-08-19T18:07:07.394506Z
 1478954
@@ -100,7 +100,7 @@ file
 
 
 
-2015-01-22T21:16:14.000000Z
+2017-04-03T19:21:29.000000Z
 391c57e839e2234af4fc9e518c180932
 2015-02-04T22:26:14.589321Z
 1082632
@@ -134,7 +134,7 @@ file
 
 
 
-2015-01-22T21:16:14.000000Z
+2017-04-03T19:21:29.000000Z
 13b464d35013b45a77a7bef331d2f4df
 2015-02-04T22:26:14.589321Z
 1082632
@@ -164,11 +164,11 @@ file
 
 custom-user-profile-photo-hu_HU.mo
 file
-1478954
 
 
 
-2015-09-25T15:34:42.000000Z
+
+2017-04-03T19:21:29.000000Z
 1ddce85f1885dfe908758510d307161a
 2016-08-19T18:07:07.394506Z
 1478954
@@ -198,11 +198,11 @@ has-props
 
 custom-user-profile-photo.pot
 file
-1478954
 
 
 
-2016-08-19T17:45:52.000000Z
+
+2017-04-03T19:21:29.000000Z
 978d250aca49e123b0ee6b65ad724b1d
 2016-08-19T18:07:07.394506Z
 1478954
@@ -232,11 +232,11 @@ file
 
 custom-user-profile-photo-hu_HU.po
 file
-1478954
 
 
 
-2015-09-25T15:34:42.000000Z
+
+2017-04-03T19:21:29.000000Z
 2b10b2b6be2191e7cf974cd807c89ca9
 2016-08-19T18:07:07.394506Z
 1478954
