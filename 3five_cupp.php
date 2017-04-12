@@ -9,7 +9,7 @@ Author: 3five
 Author URI: http://3five.com
 Text Domain: custom-user-profile-photo
 Domain Path: /languages/
-Version: 0.5.2
+Version: 0.5.3
 */
 
 /**
@@ -288,17 +288,24 @@ add_filter( 'get_avatar', 'cupp_avatar', 1, 5 );
 /**
  * Get a WordPress User by ID or email
  *
- * @param int|object|string $identifier User object, UD or email address.
+ * @param int|object|string $identifier User object, ID or email address.
  *
  * @return WP_User
  */
 function cupp_get_user_by_id_or_email( $identifier ) {
+	// If an integer is passed.
 	if ( is_numeric( $identifier ) ) {
 		return get_user_by( 'id', (int) $identifier );
 	}
 
+	// If the WP_User object is passed.
 	if ( is_object( $identifier ) && property_exists( $identifier, 'ID' ) ) {
 		return get_user_by( 'id', (int) $identifier->ID );
+	}
+
+	// If the WP_Comment object is passed.
+	if ( is_object( $identifier ) && property_exists( $identifier, 'user_id' ) ) {
+		return get_user_by( 'id', (int) $identifier->user_id );
 	}
 
 	return get_user_by( 'email', $identifier );
