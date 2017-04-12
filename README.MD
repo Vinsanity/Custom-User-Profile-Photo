@@ -4,7 +4,7 @@ Donate link:
 Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
 Tested up to: 4.7.3
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,6 +133,9 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 * Beta version release.
 
 == Upgrade Notice ==
+
+= 0.5.3 =
+* Addressed an issue where an object being passed into `cupp_get_user_by_id_or_email` could potentially be the WP_Comment object.
 
 = 0.5.2 =
 Fixed issue with a PHP warning when getting the user with the WP_User object.

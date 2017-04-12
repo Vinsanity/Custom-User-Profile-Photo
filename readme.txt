@@ -134,6 +134,12 @@ Where the $user_ID is the users ID number and the size is a registered image siz
 
 == Upgrade Notice ==
 
+= 0.5.3 =
+Addressed an issue where an object being passed into `cupp_get_user_by_id_or_email` could potentially be the WP_Comment object.
+
+= 0.5.2 =
+Fixed issue with a PHP warning when getting the user with the WP_User object.
+
 = 0.5.1 =
 Fixed issue with update_user_attribute.
 
