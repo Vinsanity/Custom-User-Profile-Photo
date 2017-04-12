@@ -4,7 +4,7 @@ Donate link:
 Tags: custom profile photo, custom profile picture, profile picture, user profile, profile photo, user profile photo, user profile picture
 Requires at least: 3.6.1
 Tested up to: 4.7.3
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
