@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Custom User Profile Photo
-Plugin URI: http://3five.com
+Plugin URI: http://vincentlistrani.com
 Description: A simple and effective custom WordPress user profile photo plugin. This plugin leverages the WordPress
 Media Uploader functionality. To use this plugin go to the users tab and select a user. The new field can be found
 below the password fields for that user.
-Author: 3five
-Author URI: http://3five.com
+Author: VincentListrani
+Author URI: http://vincentlistrani.com
 Text Domain: custom-user-profile-photo
 Domain Path: /languages/
 Version: 0.5.3
